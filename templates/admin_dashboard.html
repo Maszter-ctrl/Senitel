@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Admin Dashboard — Sentinel</title>
+  <style>
+    body{font-family:sans-serif;padding:40px;background:#f5f5f5}
+    .card{max-width:900px;margin:0 auto;background:#fff;padding:20px;border-radius:6px;border:1px solid #ddd}
+    pre{background:#eee;padding:10px;border-radius:4px;overflow:auto}
+    .danger{color:#b00}
+    .btn{padding:8px 12px;background:#2e7d32;color:#fff;border:none;border-radius:4px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Admin Dashboard</h2>
+
+    <h3>Current Version: {{ version }}</h3>
+    <form method="POST" action="{{ url_for('edit_version') }}">
+      <input type="text" name="version" value="{{ version }}">
+      <button type="submit">Update Version</button>
+    </form>
+
+    <hr>
+
+    <hr>
+
+    <h3>Recent Feedback</h3>
+    {% if feedback_preview %}
+      <ul>
+        {% for fb in feedback_preview %}
+          <li>{{ fb }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No feedback yet.</p>
+    {% endif %}
+
+    <hr>
+    <form method="post" action="{{ url_for('admin_delete_account') }}" onsubmit="return confirm('Delete admin account? This will allow signup again.');">
+      <button type="submit" class="btn">Delete admin account (dangerous)</button>
+    </form>
+
+    <p><a href="{{ url_for('admin_logout') }}">Log out</a></p>
+  </div>
+</body>
+</html>

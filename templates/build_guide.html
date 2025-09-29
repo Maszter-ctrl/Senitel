@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel Build Guide</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { 
+      margin:0; padding:40px; background:#f0f0f0; color:#222; 
+      font-family:"Cantarell","Ubuntu","DejaVu Sans",system-ui,sans-serif; 
+    }
+    .container { max-width:900px; margin:0 auto; background:#fff; padding:30px; border:1px solid #ccc; position:relative; }
+    h1, h2, h3, h4 { color:#2e7d32; }
+    h1 { display:flex; align-items:center; margin-top:0; font-size:36px; }
+    .logo { height:60px; width:auto; margin-right:15px; }
+    pre { background:#eee; padding:10px; border-radius:4px; overflow-x:auto; }
+    a { color:#19F; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    hr { border:none; border-top:1px solid #ccc; margin:25px 0; }
+    section { margin-top:30px; }
+    li { margin-bottom:8px; }
+    .note { font-style:italic; color:#555; margin-top:10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <h1>
+    <img src="/static/logo.jpg" alt="Sentinel Logo" class="logo">
+    Sentinel Build Guide
+  </h1>
+
+  <p>Welcome to the ultimate Sentinel build guide. This comprehensive article covers everything you need to know to set up, customize, build, and deploy Sentinel from source. It’s designed to be extremely detailed — suitable for beginners and advanced users alike.</p>
+
+  <hr>
+
+  <!-- Table of Contents -->
+  <section>
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#preparation">1. System Preparation</a></li>
+      <li><a href="#zip-extract">2. Extracting the Source ZIP</a></li>
+      <li><a href="#python-setup">3. Python Installation</a></li>
+      <li><a href="#venv">4. Virtual Environment Setup</a></li>
+      <li><a href="#dependencies">5. Installing Dependencies</a></li>
+      <li><a href="#custom-blocklist">6. Customizing the Blocklist</a></li>
+      <li><a href="#linux-build">7. Building the Linux Binary</a></li>
+      <li><a href="#windows-mac">8. Optional Windows/macOS Builds</a></li>
+      <li><a href="#testing">9. Testing Your Build</a></li>
+      <li><a href="#advanced">10. Advanced Configurations & Tips</a></li>
+      <li><a href="#faq">11. FAQs and Troubleshooting</a></li>
+      <li><a href="#safety">12. Safety & Best Practices</a></li>
+    </ol>
+  </section>
+
+  <hr>
+
+  <!-- Detailed Sections -->
+  <section id="preparation">
+    <h2>1. System Preparation</h2>
+    <p>Before building Sentinel, ensure your Linux system is up to date:</p>
+    <pre>sudo apt update
+sudo apt upgrade</pre>
+    <p>Install essential build tools:</p>
+    <pre>sudo apt install build-essential git curl wget unzip</pre>
+    <p class="note">This ensures your system has compilers, make, and unzip utilities required for building and running Python binaries.</p>
+  </section>
+
+  <section id="zip-extract">
+    <h2>2. Extracting the Source ZIP</h2>
+    <p>Download the source ZIP from the Sentinel main page, then extract it:</p>
+    <pre>unzip blocker_source.zip -d sentinel_source
+cd sentinel_source</pre>
+    <p>Make sure the folder path contains **no spaces or special characters** to avoid issues with PyInstaller.</p>
+  </section>
+
+  <section id="python-setup">
+    <h2>3. Python Installation</h2>
+    <p>Sentinel requires Python 3.11 or higher. Install it on Linux:</p>
+    <pre>sudo apt install python3.11 python3.11-venv python3.11-dev</pre>
+    <p>Verify the version:</p>
+    <pre>python3.11 --version</pre>
+    <p class="note">If your system doesn’t have 3.11, consider using <code>deadsnakes PPA</code> or compiling from source.</p>
+  </section>
+
+  <section id="venv">
+    <h2>4. Virtual Environment Setup</h2>
+    <pre>python3.11 -m venv venv
+source venv/bin/activate</pre>
+    <p>Using a virtual environment prevents dependency conflicts with system Python packages.</p>
+  </section>
+
+  <section id="dependencies">
+    <h2>5. Installing Dependencies</h2>
+    <pre>pip install --upgrade pip
+pip install -r requirements.txt</pre>
+    <p>All required Python libraries for Sentinel will be installed in your virtual environment.</p>
+  </section>
+
+  <section id="custom-blocklist">
+    <h2>6. Customizing the Blocklist</h2>
+    <p>Edit <code>blocklist.json</code> to add processes you want Sentinel to block:</p>
+    <pre>{
+  "processes": ["example_process1", "example_process2"]
+}</pre>
+    <p>You can also modify the CLI interface to dynamically add/remove processes.</p>
+  </section>
+
+  <section id="linux-build">
+    <h2>7. Building the Linux Binary</h2>
+    <p>Use PyInstaller to create a single executable:</p>
+    <pre>pyinstaller --onefile blocker.py --name blocker_linux</pre>
+    <p>Output executable will appear in the <code>dist</code> folder.</p>
+    <p>Test the binary in a safe environment first.</p>
+  </section>
+
+  <section id="windows-mac">
+    <h2>8. Optional: Build for Windows/macOS</h2>
+    <pre>pyinstaller --onefile blocker.py --name blocker_windows.exe
+pyinstaller --onefile blocker.py --name blocker_mac</pre>
+    <p>Cross-building may require virtual machines or containers for macOS/Windows.</p>
+  </section>
+
+  <section id="testing">
+    <h2>9. Testing Your Build</h2>
+    <ul>
+      <li>Run in a safe VM or container.</li>
+      <li>Check logs for blocked processes.</li>
+      <li>Ensure no critical system processes are blocked.</li>
+    </ul>
+  </section>
+
+  <section id="advanced">
+    <h2>10. Advanced Configurations & Tips</h2>
+    <ul>
+      <li>Use <code>cron</code> jobs to restart Sentinel on reboot.</li>
+      <li>Integrate with systemd for daemon management.</li>
+      <li>Configure logging levels for different environments.</li>
+      <li>Automate blocklist updates via external JSON URLs.</li>
+      <li>Advanced CLI flags for debug, dry-run, or verbose monitoring.</li>
+      <li>Custom scripts to dynamically add/remove processes while running.</li>
+    </ul>
+  </section>
+
+  <section id="faq">
+    <h2>11. FAQs and Troubleshooting</h2>
+    <p><strong>Q:</strong> Why is PyInstaller failing on my system?<br>
+    <strong>A:</strong> Make sure Python 3.11 and development headers are installed, and you are using a clean virtual environment.</p>
+    <p><strong>Q:</strong> Sentinel crashes immediately?<br>
+    <strong>A:</strong> Check your blocklist — avoid system-critical processes.</p>
+    <p><strong>Q:</strong> How do I update Sentinel?<br>
+    <strong>A:</strong> Rebuild from latest source ZIP or pull latest repository changes.</p>
+  </section>
+
+  <section id="safety">
+    <h2>12. Safety & Best Practices</h2>
+    <ul>
+      <li>Always backup critical data.</li>
+      <li>Run initial tests in a virtual machine or container.</li>
+      <li>Do not run as root unless absolutely necessary.</li>
+      <li>Inspect source code if running binaries from untrusted sources.</li>
+      <li>Keep your system updated to avoid unexpected issues.</li>
+    </ul>
+    <p class="note">Sentinel is powerful. Misconfiguration can terminate essential processes. Always test carefully.</p>
+  </section>
+
+  <hr>
+  <p><a href="/">← Back to Sentinel main page</a></p>
+</div>
+</body>
+</html>

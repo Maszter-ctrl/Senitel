@@ -1,0 +1,21 @@
+@app.route("/admin/edit_code", methods=["GET", "POST"])
+@require_admin
+def edit_code():
+    filepath = os.path.join(DIST_FOLDER, "blocker_linux")  # adjust filename if needed
+
+    # only allow editing if file is text-like
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            content = f.read()
+    except UnicodeDecodeError:
+        flash("This file is not editable (not UTF-8 text).", "error")
+        return redirect(url_for("admin_dashboard"))
+
+    if request.method == "POST":
+        new_content = request.form.get("content", "")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(new_content)
+        flash("Code updated successfully!", "success")
+        return redirect(url_for("admin_dashboard"))
+
+    return render_template("edit_code.html", content=content)
