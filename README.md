@@ -2,7 +2,7 @@
   <img src="static/cover.png" alt="Project Logo" width="200"/>
 </p>
 
-<h1 align="center">🚫🖥️ Linux Process Blocker 🐧⚡</h1>
+<h1 align="center"> Senitel Porject vBETA 🐧⚡</h1>
 
 <p align="center">
   A lightweight and efficient Linux tool for <strong>real-time process monitoring</strong>, 
@@ -32,10 +32,8 @@ Uses minimal resources — perfect for desktops, servers, or low-powered devices
 
 ## ⚙️ Installation
 
-```bash
-git clone https://github.com/yourusername/linux-process-blocker.git
-cd linux-process-blocker
-chmod +x blocker.sh
+View the build guide or install via terminal.
+
 
 
 
