@@ -2,7 +2,7 @@
   <img src="static/cover.png" alt="Project Logo" width="200"/>
 </p>
 
-<h1 align="center"> Senitel Porject vBETA 🐧⚡</h1>
+<h1 align="center"> Senitel Project vBETA 🐧⚡</h1>
 
 <p align="center">
   A lightweight and efficient Linux tool for <strong>real-time process monitoring</strong>, 
@@ -33,6 +33,7 @@ Uses minimal resources — perfect for desktops, servers, or low-powered devices
 ## ⚙️ Installation
 
 View the build guide or install via terminal.
+
 
 
 
