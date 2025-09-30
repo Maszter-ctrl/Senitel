@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="static/logo.jpg" alt="Project Logo" width="200"/>
+  <img src="static/logo.png" alt="Project Logo" width="200"/>
 </p>
 
 <h1 align="center">🚫🖥️ Linux Process Blocker 🐧⚡</h1>
@@ -36,4 +36,5 @@ Uses minimal resources — perfect for desktops, servers, or low-powered devices
 git clone https://github.com/yourusername/linux-process-blocker.git
 cd linux-process-blocker
 chmod +x blocker.sh
+
 
