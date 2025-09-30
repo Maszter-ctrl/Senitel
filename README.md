@@ -32,7 +32,9 @@ Uses minimal resources — perfect for desktops, servers, or low-powered devices
 
 ## ⚙️ Installation
 
-View the build guide or install via terminal.
+View the build guide or install via terminal if you downloaded the source: unzip blocker_source.zip -d sentinel_source
+cd sentinel_source
+
 
 
 
